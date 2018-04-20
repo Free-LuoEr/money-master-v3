@@ -54,8 +54,8 @@ public class AccountQueryWorkflow {
   public void recordTransfer(DispatchedEvent<MoneyTransferCreatedEvent> de) {
     String eventId = de.getEventId().asString();
     String moneyTransferId = de.getEntityId();
-    String fromAccountId = de.getEvent().getDetails().getFromAccountId();
-    String toAccountId = de.getEvent().getDetails().getToAccountId();
+    String fromAccountId = de.getEvent().getDetails().getToAccountId();
+    String toAccountId = de.getEvent().getDetails().getFromAccountId();
     logger.info("**************** account version={}, {}", fromAccountId, eventId);
     logger.info("**************** account version={}, {}", toAccountId, eventId);
 
@@ -72,12 +72,12 @@ public class AccountQueryWorkflow {
 
   @EventHandlerMethod
   public void recordDebit(DispatchedEvent<AccountDebitedEvent> de) {
-    saveChange(de, -1);
+    saveChange(de, +1);
   }
 
   @EventHandlerMethod
   public void recordCredit(DispatchedEvent<AccountCreditedEvent> de) {
-    saveChange(de, +1);
+    saveChange(de, -1);
   }
 
   @EventHandlerMethod
@@ -120,6 +120,6 @@ public class AccountQueryWorkflow {
     String accountId = de.getEntityId();
     logger.info("**************** account version={}, {}", accountId, de.getEventId().asString());
 
-    accountInfoUpdateService.updateBalance(accountId, changeId, balanceDelta, ci);
+    accountInfoUpdateService.updateBalance(changeId, accountId, balanceDelta, ci);
   }
 }
