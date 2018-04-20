@@ -20,6 +20,6 @@ public class AccountService  {
   }
 
   public CompletableFuture<EntityWithIdAndVersion<Account>> deleteAccount(String accountId) {
-    return accountRepository.update(accountId, new DeleteAccountCommand());
+    return accountRepository.save(accountId, new DeleteAccountCommand());
   }
 }

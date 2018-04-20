@@ -6,5 +6,5 @@ import java.util.List;
 
 interface AccountInfoRepository extends MongoRepository<AccountInfo, String> {
 
-    List<AccountInfo> findByCustomerId(String customerId);
+  //  List<AccountInfo> findByCustomerId(String customerId);
 }
